@@ -2,7 +2,6 @@ import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switc
 import React, { useState } from "react";
 import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
-
 import { Address, Balance, Events } from "../components";
 
 export default function Lock({
@@ -61,13 +60,17 @@ export default function Lock({
             Set Purpose!
           </Button>
         </div>
-        <h4>Unlock Date</h4>
+
+
         <Divider />
+
+        <h4>Unlock Date</h4>
+
         <div style={{ margin: 8 }}>
           <div style={{ marginTop: 2 }}>
             <DatePicker onChange={(dateMomentObject,dateString) => {
               setDate(dateString);
-              //alert(date);
+              alert(date);
             }} />
           </div>
           <Button
@@ -90,11 +93,9 @@ export default function Lock({
                   );
                 }
               });
-              console.log("awaiting metamask/web3 confirm result...", result);
-              console.log(await result);
             }}
           >
-            Set Purpose!
+            Lock
           </Button>
         </div>
       </div>

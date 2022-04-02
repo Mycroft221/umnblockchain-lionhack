@@ -2,7 +2,7 @@ import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switc
 import React, { useState } from "react";
 import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
-
+import { ethers } from "ethers";
 import { Address, Balance, Events } from "../components";
 
 export default function Lock({
@@ -36,28 +36,36 @@ export default function Lock({
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {
-              /* look how you call setPurpose on your contract: */
-              /* notice how you pass a call back for tx updates too */
-              const result = tx(writeContracts.YourContract.setPurpose(newPurpose), update => {
-                console.log("📡 Transaction Update:", update);
-                if (update && (update.status === "confirmed" || update.status === 1)) {
-                  console.log(" 🍾 Transaction " + update.hash + " finished!");
-                  console.log(
-                    " ⛽️ " +
-                      update.gasUsed +
-                      "/" +
-                      (update.gasLimit || update.gas) +
-                      " @ " +
-                      parseFloat(update.gasPrice) / 1000000000 +
-                      " gwei",
-                  );
-                }
-              });
-              console.log("awaiting metamask/web3 confirm result...", result);
-              console.log(await result);
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+                // You can also use an ENS name for the contract address
+                const daiAddress = "dai.tokens.ethers.eth";
+
+                // The ERC-20 Contract ABI, which is a common contract interface
+                // for tokens (this is the Human-Readable ABI format)
+                const daiAbi = [
+                // Some details about the token
+                "function name() view returns (string)",
+                "function symbol() view returns (string)",
+
+                // Get the account balance
+                "function balanceOf(address) view returns (uint)",
+
+                // Send some of your tokens to someone else
+                "function transfer(address to, uint amount)",
+
+                // An event triggered whenever anyone transfers to someone else
+                "event Transfer(address indexed from, address indexed to, uint amount)"
+                ];
+
+                // The Contract object
+                const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
+
+                const name = await daiContract.balanceOf("ricmoo.firefly.eth")
+                alert(name);
             }}
           >
-            Set Purpose!
+            GetBalance
           </Button>
         </div>
         <Divider />

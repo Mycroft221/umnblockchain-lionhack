@@ -29,7 +29,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, ExampleUI, Hints, Subgraph } from "./views";
+import { Home, ExampleUI, Hints, Subgraph, Lock, Unlock } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
@@ -257,7 +257,7 @@ function App(props) {
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
       <Menu style={{ textAlign: "center", marginTop: 40 }} selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/">
+        {/* <Menu.Item key="/">
           <Link to="/">App Home</Link>
         </Menu.Item>
         <Menu.Item key="/debug">
@@ -274,6 +274,12 @@ function App(props) {
         </Menu.Item>
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
+        </Menu.Item> */}
+        <Menu.Item key="/lock">
+          <Link to="/lock">Lock</Link>
+        </Menu.Item>
+        <Menu.Item key="/unlock">
+          <Link to="/unlock">Unlock</Link>
         </Menu.Item>
       </Menu>
 
@@ -349,6 +355,36 @@ function App(props) {
             tx={tx}
             writeContracts={writeContracts}
             mainnetProvider={mainnetProvider}
+          />
+        </Route>
+        <Route exact path="/lock">
+          {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
+          <Lock
+            address={address}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            localProvider={localProvider}
+            yourLocalBalance={yourLocalBalance}
+            price={price}
+            tx={tx}
+            writeContracts={writeContracts}
+            readContracts={readContracts}
+            purpose="lock"
+          />
+        </Route>
+        <Route exact path="/unlock">
+          {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
+          <Unlock
+            address={address}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            localProvider={localProvider}
+            yourLocalBalance={yourLocalBalance}
+            price={price}
+            tx={tx}
+            writeContracts={writeContracts}
+            readContracts={readContracts}
+            purpose="lock"
           />
         </Route>
       </Switch>

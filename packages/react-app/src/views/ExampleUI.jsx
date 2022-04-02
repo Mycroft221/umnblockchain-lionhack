@@ -26,6 +26,7 @@ export default function ExampleUI({
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>Example UI:</h2>
         <h4>purpose: {purpose}</h4>
+        <h4>LP Token</h4>
         <Divider />
         <div style={{ margin: 8 }}>
           <Input

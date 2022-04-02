@@ -26,13 +26,27 @@ export default function Lock({
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>Lock Your LP Token</h2>
         <h4>LP Token Address</h4>
-        <Divider />
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
               setNewPurpose(e.target.value);
             }}
           />
+        </div>
+
+
+        <Divider />
+
+        <h4>Unlock Date</h4>
+
+        <div style={{ margin: 8 }}>
+          <div style={{ marginTop: 2 }}>
+            <DatePicker onChange={(dateMomentObject,dateString) => {
+              setDate(dateString);
+              alert(date);
+            }} />
+          </div>
+            <Divider />
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {
@@ -53,26 +67,10 @@ export default function Lock({
                   );
                 }
               });
-              console.log("awaiting metamask/web3 confirm result...", result);
-              console.log(await result);
             }}
           >
-            Set Purpose!
+            Approve
           </Button>
-        </div>
-
-
-        <Divider />
-
-        <h4>Unlock Date</h4>
-
-        <div style={{ margin: 8 }}>
-          <div style={{ marginTop: 2 }}>
-            <DatePicker onChange={(dateMomentObject,dateString) => {
-              setDate(dateString);
-              alert(date);
-            }} />
-          </div>
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {

@@ -265,11 +265,11 @@ function App(props) {
         </Menu.Item>
         <Menu.Item key="/hints">
           <Link to="/hints">Hints</Link>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="/exampleui">
           <Link to="/exampleui">ExampleUI</Link>
         </Menu.Item>
-        <Menu.Item key="/mainnetdai">
+        {/* <Menu.Item key="/mainnetdai">
           <Link to="/mainnetdai">Mainnet DAI</Link>
         </Menu.Item>
         <Menu.Item key="/subgraph">

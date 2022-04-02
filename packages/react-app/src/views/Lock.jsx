@@ -17,6 +17,7 @@ export default function Lock({
   writeContracts,
 }) {
   const [newPurpose, setNewPurpose] = useState("loading...");
+  const [date, setDate] = useState("");
 
   return (
     <div>
@@ -63,11 +64,12 @@ export default function Lock({
         <h4>Unlock Date</h4>
         <Divider />
         <div style={{ margin: 8 }}>
-          <Input
-            onChange={e => {
-              setNewPurpose(e.target.value);
-            }}
-          />
+          <div style={{ marginTop: 2 }}>
+            <DatePicker onChange={(dateMomentObject,dateString) => {
+              setDate(dateString);
+              //alert(date);
+            }} />
+          </div>
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {

@@ -16,7 +16,10 @@ function Home({ yourLocalBalance, readContracts }) {
 
   return (
     <div>
-      
+        <br/>
+      <h3>LockJar is a dApp that allows you to lock tokens and receive a "bond." This bond can be redeemed for your tokens after the unlock time. This bond can also be transferred to another user, allowing a secondary market to develop for LP tokens.</h3>
+          <br/>
+          <h3>Click "Lock" to get started.</h3>
     </div>
   );
 }

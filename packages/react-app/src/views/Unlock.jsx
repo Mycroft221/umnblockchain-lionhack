@@ -4,7 +4,6 @@ import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
 import { ethers } from "ethers";
 import { Address, Balance, Events } from "../components";
-import jar from '../Jar.json'
 
 export default function Lock({
   purpose,
@@ -16,8 +15,11 @@ export default function Lock({
   tx,
   readContracts,
   writeContracts,
+  userSigner,
 }) {
-  const [newPurpose, setNewPurpose] = useState("loading...");
+  const [btAddresss, setBtAddress] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   return (
     <div>
@@ -30,7 +32,7 @@ export default function Lock({
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
-              setNewPurpose(e.target.value);
+              setBtAddress(e.target.value);
             }}
           />
         </div>
@@ -40,70 +42,72 @@ export default function Lock({
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
-              setNewPurpose(e.target.value);
+              setAmount(e.target.value);
             }}
           />
             <Divider />
+            <p>{errorMessage}</p>
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {
-              /* look how you call setPurpose on your contract: */
-              /* notice how you pass a call back for tx updates too */
-              const result = tx(writeContracts.YourContract.setPurpose(newPurpose), update => {
-                console.log("📡 Transaction Update:", update);
-                if (update && (update.status === "confirmed" || update.status === 1)) {
-                  console.log(" 🍾 Transaction " + update.hash + " finished!");
-                  console.log(
-                    " ⛽️ " +
-                      update.gasUsed +
-                      "/" +
-                      (update.gasLimit || update.gas) +
-                      " @ " +
-                      parseFloat(update.gasPrice) / 1000000000 +
-                      " gwei",
-                  );
+                  // You can also use an ENS name for the contract address
+                  const jarAddress = "0x8f4a74d08b8ec17818ee347b13aa83c5b18bb008";
+                  const bondAddress = "0x52aaaf39de9a62b67c69dbc9d16bf2e708e2723b";                  
+                  const bondAbi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"indexed":false,"internalType":"uint256[]","name":"values","type":"uint256[]"}],"name":"TransferBatch","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"TransferSingle","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"value","type":"string"},{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"}],"name":"URI","type":"event"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"accounts","type":"address[]"},{"internalType":"uint256[]","name":"ids","type":"uint256[]"}],"name":"balanceOfBatch","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"uint256[]","name":"values","type":"uint256[]"}],"name":"burnBatch","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"exists","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"mintBatch","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"safeBatchTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newuri","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"uri","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}];
+                  const bondContract = new ethers.Contract(bondAddress, bondAbi, userSigner);
+                  
+                try {
+                    const unlockResponse = await bondContract.setApprovalForAll(jarAddress, true);
+                    window.unlockResponse = unlockResponse;
+                  setErrorMessage("Successfully Approved");
+                 } catch (e) {
+                  setErrorMessage(e.toString());
+                 }
                 }
-              });
-            }}
+              }
           >
             Approve
           </Button>
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {
-                // const provider = new ethers.providers.Web3Provider(window)
+                if (errorMessage != "Successfully Approved") {
+                    setErrorMessage("Please Approve First");
+                  }
+                  else {
+                 // const provider = new ethers.providers.Web3Provider(window)
 
-                // You can also use an ENS name for the contract address
-                const daiAddress = "dai.tokens.ethers.eth";
+                 const jarAddress = "0x8f4a74d08b8ec17818ee347b13aa83c5b18bb008";
+                 const bondAddress = "0x52aaaf39de9a62b67c69dbc9d16bf2e708e2723b";
+                 
+                 const jarAbi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"addresses","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"bond","outputs":[{"internalType":"contract Bond","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"},{"internalType":"uint256","name":"_unlock","type":"uint256"}],"name":"lock","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256[]","name":"","type":"uint256[]"},{"internalType":"uint256[]","name":"","type":"uint256[]"},{"internalType":"bytes","name":"","type":"bytes"}],"name":"onERC1155BatchReceived","outputs":[{"internalType":"bytes4","name":"","type":"bytes4"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"bytes","name":"","type":"bytes"}],"name":"onERC1155Received","outputs":[{"internalType":"bytes4","name":"","type":"bytes4"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"unlock","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"unlocks","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+                   setErrorMessage(amount + " tokens successfully locked. Check your wallet for bond tokens issued.");
 
-                // The ERC-20 Contract ABI, which is a common contract interface
-                // for tokens (this is the Human-Readable ABI format)
+                 const jarContract = new ethers.Contract(jarAddress, jarAbi, userSigner);
 
-                // checkpoint
-                const daiAbi = jar.abi;
-                //  const daiAbi = [
-                //  // Some details about the token
-                //  "function name() view returns (string)",
-                //  "function symbol() view returns (string)",
+                //  const name = await jarContract.bond();
+                //  alert(name);
 
-                //  // Get the account balance
-                //  "function balanceOf(address) view returns (uint)",
+                try {
+                    setErrorMessage("unlocking");
+                    console.log(amount);
+                    console.log(typeof(amount));
+                    const unlockResponse = await jarContract.unlock(btAddresss, amount);
+                    window.unlockResponse = unlockResponse;
+                  setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
+                 } catch (e) {
+                     window.errorMessageMine = e;
+                     if (e.data && e.data.message) {
+                        setErrorMessage(e.data.message);
+                     } else {
+                         setErrorMessage("error");
+                     }
 
-                //  // Send some of your tokens to someone else
-                //  "function transfer(address to, uint amount)",
-
-                //  // An event triggered whenever anyone transfers to someone else
-                //  "event Transfer(address indexed from, address indexed to, uint amount)"
-                //  ];
-
-                 // The Contract object
-                 const daiContract = new ethers.Contract(daiAddress, daiAbi, localProvider);
-
-                 const name = await daiContract.balanceOf("ricmoo.firefly.eth")
-                 alert(name);
+                 }
+                }
             }}
           >
-            GetBalance
+            Unlock
           </Button>
         </div>
       </div>

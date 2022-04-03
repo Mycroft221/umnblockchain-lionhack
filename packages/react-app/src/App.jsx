@@ -288,7 +288,7 @@ function App(props) {
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
           <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
         </Route>
-        <!--<Route exact path="/debug">
+        <Route exact path="/debug">
           {/*
                 🎛 this scaffolding is full of commonly used components
                 this <Contract/> component will automatically parse your ABI
@@ -356,7 +356,7 @@ function App(props) {
             writeContracts={writeContracts}
             mainnetProvider={mainnetProvider}
           />
-        </Route>-->
+        </Route>
         <Route exact path="/lock">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
           <Lock

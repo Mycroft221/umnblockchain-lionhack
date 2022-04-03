@@ -94,7 +94,7 @@ export default function Lock({
                     console.log(typeof(amount));
                     const unlockResponse = await jarContract.unlock(btAddresss, amount);
                     window.unlockResponse = unlockResponse;
-                  setErrorMessage(amount + " tokens successfully locked. Check your wallet for liquidity tokens returned.");
+                  setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
                  } catch (e) {
                      window.errorMessageMine = e;
                      if (e.data && e.data.message) {

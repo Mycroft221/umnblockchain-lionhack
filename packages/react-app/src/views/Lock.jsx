@@ -37,6 +37,16 @@ export default function Lock({
 
         <Divider />
 
+        <h4>Amount</h4>
+        <div style={{ margin: 8 }}>
+          <Input
+            onChange={e => {
+              setNewPurpose(e.target.value);
+            }}
+          />
+        </div>
+            <Divider />
+
         <h4>Unlock Date</h4>
 
         <div style={{ margin: 8 }}>

@@ -24,8 +24,8 @@ export default function Lock({
         ⚙️ Here is an example UI that displays and sets the purpose in your smart contract:
       */}
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
-        <h2>Lock Your LP Token</h2>
-        <h4>LP Token Address</h4>
+        <h2>Lock Your Tokens</h2>
+        <h4>Token Address</h4>
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {

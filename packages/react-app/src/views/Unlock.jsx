@@ -4,6 +4,7 @@ import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
 import { ethers } from "ethers";
 import { Address, Balance, Events } from "../components";
+import jar from '../../../hardhat/artifacts/contracts/Jar.sol/Jar.json'
 
 export default function Lock({
   purpose,
@@ -70,27 +71,30 @@ export default function Lock({
           <Button
             style={{ marginTop: 8 }}
             onClick={async () => {
-                 // const provider = new ethers.providers.Web3Provider(window)
+                // const provider = new ethers.providers.Web3Provider(window)
 
-                 // You can also use an ENS name for the contract address
-                 const daiAddress = "dai.tokens.ethers.eth";
+                // You can also use an ENS name for the contract address
+                const daiAddress = "dai.tokens.ethers.eth";
 
-                 // The ERC-20 Contract ABI, which is a common contract interface
-                 // for tokens (this is the Human-Readable ABI format)
-                 const daiAbi = [
-                 // Some details about the token
-                 "function name() view returns (string)",
-                 "function symbol() view returns (string)",
+                // The ERC-20 Contract ABI, which is a common contract interface
+                // for tokens (this is the Human-Readable ABI format)
 
-                 // Get the account balance
-                 "function balanceOf(address) view returns (uint)",
+                // checkpoint
+                const daiAbi = jar.abi;
+                //  const daiAbi = [
+                //  // Some details about the token
+                //  "function name() view returns (string)",
+                //  "function symbol() view returns (string)",
 
-                 // Send some of your tokens to someone else
-                 "function transfer(address to, uint amount)",
+                //  // Get the account balance
+                //  "function balanceOf(address) view returns (uint)",
 
-                 // An event triggered whenever anyone transfers to someone else
-                 "event Transfer(address indexed from, address indexed to, uint amount)"
-                 ];
+                //  // Send some of your tokens to someone else
+                //  "function transfer(address to, uint amount)",
+
+                //  // An event triggered whenever anyone transfers to someone else
+                //  "event Transfer(address indexed from, address indexed to, uint amount)"
+                //  ];
 
                  // The Contract object
                  const daiContract = new ethers.Contract(daiAddress, daiAbi, localProvider);

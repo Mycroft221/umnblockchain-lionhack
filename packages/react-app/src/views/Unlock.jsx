@@ -4,7 +4,7 @@ import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
 import { ethers } from "ethers";
 import { Address, Balance, Events } from "../components";
-import jar from '../../../hardhat/artifacts/contracts/Jar.sol/Jar.json'
+import jar from '../Jar.json'
 
 export default function Lock({
   purpose,

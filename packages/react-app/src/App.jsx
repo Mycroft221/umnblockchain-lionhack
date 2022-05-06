@@ -275,6 +275,9 @@ function App(props) {
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
         </Menu.Item> */}
+        <Menu.Item key="/exampleui">
+          <Link to="/exampleui">ExampleUI</Link>
+        </Menu.Item>
         <Menu.Item key="/lock">
           <Link to="/lock">Lock</Link>
         </Menu.Item>

@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
+import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch, Radio } from "antd";
 import React, { useState } from "react";
 import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
@@ -23,6 +23,7 @@ export default function Lock({
   const [date, setDate] = useState(0);
   const [approveResponse, setApproveResponse] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  
 
   return (
     <div>
@@ -31,7 +32,13 @@ export default function Lock({
       */}
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>Lock Your Tokens</h2>
-        <h4>Token Address</h4>
+
+        <Radio.Group defaultValue="fungible" style={{ marginTop: 16 }}>
+          <Radio.Button value="fungible">Fungible</Radio.Button>
+          <Radio.Button value="non_fungible">Non-Fungible</Radio.Button>
+        </Radio.Group>
+
+        <h4 style={{ marginTop: 16 }}>Token Address</h4>
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {

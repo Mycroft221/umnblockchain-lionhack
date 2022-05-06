@@ -172,6 +172,13 @@ export const NETWORKS = {
     gasPrice: 1000000000,
     faucet: "https://faucet.fantom.network/",
   },
+  testnetOasis: {
+    name: "testnetOasis",
+    rpcUrl: `https://testnet.emerald.oasis.dev`,
+    chainId: 42261,
+    faucet: "https://faucet.testnet.oasis.dev",
+    blockExplorer: "https://testnet.explorer.emerald.oasis.dev",
+  }
 };
 
 export const NETWORK = chainId => {

@@ -53,7 +53,7 @@ const { ethers } = require("ethers");
 */
 
 /// 📡 What chain are your contracts deployed to?
-const initialNetwork = NETWORKS.testnetHarmony; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const initialNetwork = NETWORKS.testnetOasis; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
@@ -276,6 +276,9 @@ function App(props) {
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
         </Menu.Item> */}
+        <Menu.Item key="/exampleui">
+          <Link to="/exampleui">ExampleUI</Link>
+        </Menu.Item>
         <Menu.Item key="/lock">
           <Link to="/lock">Lock</Link>
         </Menu.Item>

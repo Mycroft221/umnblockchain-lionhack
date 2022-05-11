@@ -23,7 +23,9 @@ export default function Lock({
   const [date, setDate] = useState(0);
   const [approveResponse, setApproveResponse] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
-  
+  const [tokenInfo, updateTokenInfo] = useState("fungible");
+
+  var myDate = "0";
 
   return (
     <div>
@@ -33,30 +35,31 @@ export default function Lock({
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>Lock Your Tokens</h2>
 
-        <Radio.Group defaultValue="fungible" style={{ marginTop: 16 }}>
+        <Radio.Group defaultValue="fungible" style={{ marginTop: 16 }} onChange={e => updateTokenInfo(e.target.value)}>
           <Radio.Button value="fungible">Fungible</Radio.Button>
           <Radio.Button value="non_fungible">Non-Fungible</Radio.Button>
         </Radio.Group>
 
-        <h4 style={{ marginTop: 16 }}>Token Address</h4>
-        <div style={{ margin: 8 }}>
-          <Input
-            onChange={e => {
-              setAddress(e.target.value);
-            }}
-          />
+        <div hidden={tokenInfo === "fungible"}>
+          <h4 style={{ marginTop: 16 }}>Token Address</h4>
+          <div style={{ margin: 8 }}>
+            <Input
+              onChange={e => {
+                setAddress(e.target.value);
+              }}
+            />
+          </div>
         </div>
 
-
-        <Divider />
-
-        <h4>Amount</h4>
-        <div style={{ margin: 8 }}>
-          <Input
-            onChange={e => {
-              setAmount(e.target.value);
-            }}
-          />
+        <div hidden={tokenInfo === "non_fungible"}>
+          <h4 style={{ marginTop: 16 }}>Amount</h4>
+          <div style={{ margin: 8 }}>
+            <Input
+              onChange={e => {
+                setAmount(e.target.value);
+              }}
+            />
+          </div>
         </div>
             <Divider />
 

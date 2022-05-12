@@ -25,8 +25,6 @@ export default function Lock({
   const [errorMessage, setErrorMessage] = useState("");
   const [tokenInfo, updateTokenInfo] = useState("fungible");
 
-  var myDate = "0";
-
   return (
     <div>
       {/*
@@ -40,7 +38,7 @@ export default function Lock({
           <Radio.Button value="non_fungible">Non-Fungible</Radio.Button>
         </Radio.Group>
 
-        <div hidden={tokenInfo === "fungible"}>
+        <div>
           <h4 style={{ marginTop: 16 }}>Token Address</h4>
           <div style={{ margin: 8 }}>
             <Input

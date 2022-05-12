@@ -30,7 +30,10 @@ export default function Lock({
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>Unlock Your Tokens</h2>
 
-        <Radio.Group defaultValue="fungible" style={{ marginTop: 24 }} onChange={e => updateTokenInfo(e.target.value)}>
+        <Radio.Group defaultValue="fungible" style={{ marginTop: 24 }} onChange={e => {
+          updateTokenInfo(e.target.value);
+          setErrorMessage("");
+        }}>
           <Radio.Button value="fungible">Fungible</Radio.Button>
           <Radio.Button value="non_fungible">Non-Fungible</Radio.Button>
         </Radio.Group>
@@ -938,8 +941,12 @@ export default function Lock({
                     console.log(typeof(amount));
                     const unlockResponse = (tokenInfo === "fungible") ? await jarContract.unlockFT(btAddresss, amount) : await jarContract.unlockNFT(btAddresss);
                     window.unlockResponse = unlockResponse;
-                    setErrorMessage("Request to unlock " + amount + " tokens sent. Please check your wallet for status.")
-                  // setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
+                    if(tokenInfo == "fungible") {
+                      setErrorMessage("Request to unlock " + amount + " tokens sent. Please check your wallet for status.")
+                    } else {
+                      setErrorMessage("Request to unlock NFT sent. Please check your wallet for status.")
+                    }
+                      // setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
                  } catch (e) {
                      window.errorMessageMine = e;
                      if (e.data && e.data.message) {

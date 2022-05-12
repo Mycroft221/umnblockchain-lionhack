@@ -34,7 +34,10 @@ export default function Lock({
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>Lock Your Tokens</h2>
 
-        <Radio.Group defaultValue="fungible" style={{ marginTop: 16 }} onChange={e => updateTokenInfo(e.target.value)}>
+        <Radio.Group defaultValue="fungible" style={{ marginTop: 16 }} onChange={e => {
+            updateTokenInfo(e.target.value);
+            setErrorMessage("");
+          }}>
           <Radio.Button value="fungible">Fungible</Radio.Button>
           <Radio.Button value="non_fungible">Non-Fungible</Radio.Button>
         </Radio.Group>
@@ -116,11 +119,34 @@ export default function Lock({
                   "payable": false,
                   "stateMutability": "nonpayable",
                   "type": "function"
-              }]
+                }];
+
+                const nftTokenAbi = [{
+                  "inputs": [
+                    {
+                      "internalType": "address",
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "tokenId",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "approve",
+                  "outputs": [],
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                }]
                  // The Contract object
-                 const tokenContract = new ethers.Contract(ltTokenAddress, ltTokenAbi, userSigner);
+                 const tokenContract = (tokenInfo === "fungible") ? new ethers.Contract(ltTokenAddress, ltTokenAbi, userSigner) : new ethers.Contract(ltTokenAddress, nftTokenAbi, userSigner);
                  try {
-                  await tokenContract.approve(jarAddress, amount);
+                  if(tokenInfo == "fungible") {
+                    await tokenContract.approve(jarAddress, amount);
+                  } else {
+                    await tokenContract.approve(jarAddress, nftId);
+                  }
                   setErrorMessage("Successfully Approved");
                  } catch (e) {
                   setErrorMessage(e.toString());
@@ -461,7 +487,11 @@ export default function Lock({
                 // alert(date);
                 const lockResponse = (tokenInfo === "non_fungible") ? await jarContract.lockNFT(ltTokenAddress, nftId, date) : await jarContract.lockFT(ltTokenAddress, amount, date);
                 window.lockResponse = lockResponse;
-                setErrorMessage(amount + " tokens successfully locked. Check your wallet for bond tokens issued.");
+                if(tokenInfo == "fungible") {
+                  setErrorMessage(amount + " tokens successfully locked. Check your wallet for bond tokens issued.");
+                } else {
+                  setErrorMessage("NFT successfully locked. Check your wallet for bond token issued.");
+                }
             }
             }}
           >

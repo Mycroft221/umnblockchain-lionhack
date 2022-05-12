@@ -52,7 +52,7 @@ export default function Lock({
           <div style={{ margin: 8 }}>
             <Input
               onChange={e => {
-                setAmount(e.target.value * 10 ** 18);
+                setAmount(utils.parseEther(e.target.value));
               }}
             />
           </div>
@@ -928,8 +928,6 @@ export default function Lock({
                     "type": "function"
                   }
                 ];
-                   setErrorMessage(amount + " tokens successfully locked. Check your wallet for bond tokens issued.");
-
                  const jarContract = new ethers.Contract(jarAddress, jarAbi, userSigner);
 
                 //  const name = await jarContract.bond();
@@ -942,7 +940,7 @@ export default function Lock({
                     const unlockResponse = (tokenInfo === "fungible") ? await jarContract.unlockFT(btAddresss, amount) : await jarContract.unlockNFT(btAddresss);
                     window.unlockResponse = unlockResponse;
                     if(tokenInfo == "fungible") {
-                      setErrorMessage("Request to unlock " + amount + " tokens sent. Please check your wallet for status.")
+                      setErrorMessage("Request to unlock " + utils.formatEther(amount) + " tokens sent. Please check your wallet for status.")
                     } else {
                       setErrorMessage("Request to unlock NFT sent. Please check your wallet for status.")
                     }

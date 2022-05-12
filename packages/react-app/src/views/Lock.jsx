@@ -58,7 +58,7 @@ export default function Lock({
           <div style={{ margin: 8 }}>
             <Input
               onChange={e => {
-                setAmount(e.target.value * 10 ** 18);
+                setAmount(utils.parseEther(e.target.value));
               }}
             />
           </div>
@@ -488,7 +488,7 @@ export default function Lock({
                 const lockResponse = (tokenInfo === "non_fungible") ? await jarContract.lockNFT(ltTokenAddress, nftId, date) : await jarContract.lockFT(ltTokenAddress, amount, date);
                 window.lockResponse = lockResponse;
                 if(tokenInfo == "fungible") {
-                  setErrorMessage(amount + " tokens successfully locked. Check your wallet for bond tokens issued.");
+                  setErrorMessage(utils.formatEther(amount) + " tokens successfully locked. Check your wallet for bond tokens issued.");
                 } else {
                   setErrorMessage("NFT successfully locked. Check your wallet for bond token issued.");
                 }

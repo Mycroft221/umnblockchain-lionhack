@@ -40,7 +40,7 @@ export default function Lock({
         </Radio.Group>
 
         <div>
-          <h4 style={{ marginTop: 16 }}>Token Address</h4>
+          <h4 style={{ marginTop: 24 }}>Token Address</h4>
           <div style={{ margin: 8 }}>
             <Input
               onChange={e => {
@@ -71,9 +71,8 @@ export default function Lock({
             />
           </div>
         </div>
-            <Divider />
 
-        <h4>Unlock Date</h4>
+        <h4 style={{ marginTop: 24 }}>Unlock Date</h4>
 
         <div style={{ margin: 8 }}>
           <div style={{ marginTop: 2 }}>

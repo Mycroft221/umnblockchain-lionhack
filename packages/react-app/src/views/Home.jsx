@@ -18,7 +18,7 @@ function Home({ yourLocalBalance, readContracts }) {
     <div>
         <br/>
         <h1>Welcome to LockJar!</h1>
-        <p style={{paddingLeft: 450, paddingRight: 450}}>LockJar allows you to lock tokens and receive a "bond." This bond can be redeemed for your tokens after the unlock time. This bond can also be sold to another user, allowing a secondary market to develop for LP tokens.</p>
+        <p style={{paddingLeft: 450, paddingRight: 450}}>LockJar allows you to lock tokens and receive a "bond token" that represents the right to unlock and receive the tokens locked. This bond can be redeemed for your tokens after the unlock date has passed. Bond tokens can also be sold to other users, allowing its value to be accessed at any time.</p>
           <br/>
           <h3>Click "Lock" to get started.</h3>
     </div>

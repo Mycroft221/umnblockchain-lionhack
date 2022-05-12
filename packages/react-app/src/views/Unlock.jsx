@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
+import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch, Radio } from "antd";
 import React, { useState } from "react";
 import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
@@ -20,6 +20,7 @@ export default function Lock({
   const [btAddresss, setBtAddress] = useState("");
   const [amount, setAmount] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [tokenInfo, updateTokenInfo] = useState("fungible");
 
   return (
     <div>
@@ -27,8 +28,14 @@ export default function Lock({
         ⚙️ Here is an example UI that displays and sets the purpose in your smart contract:
       */}
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
-        <h2>Unlock Your Token</h2>
-        <h4>Bond ID</h4>
+        <h2>Unlock Your Tokens</h2>
+
+        <Radio.Group defaultValue="fungible" style={{ marginTop: 24 }} onChange={e => updateTokenInfo(e.target.value)}>
+          <Radio.Button value="fungible">Fungible</Radio.Button>
+          <Radio.Button value="non_fungible">Non-Fungible</Radio.Button>
+        </Radio.Group>
+
+        <h4 style={{ marginTop: 24 }}>Bond ID</h4>
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
@@ -36,15 +43,17 @@ export default function Lock({
             }}
           />
         </div>
-        <Divider />
 
-        <h4>Amount</h4>
-        <div style={{ margin: 8 }}>
-          <Input
-            onChange={e => {
-              setAmount(e.target.value * 10 ** 18);
-            }}
-          />
+        <div hidden={tokenInfo === "non_fungible"}>
+          <h4 style={{ marginTop: 24 }}>Amount</h4>
+          <div style={{ margin: 8 }}>
+            <Input
+              onChange={e => {
+                setAmount(e.target.value * 10 ** 18);
+              }}
+            />
+          </div>
+        </div>
             <Divider />
             <p>{errorMessage}</p>
           <Button
@@ -927,7 +936,7 @@ export default function Lock({
                     setErrorMessage("unlocking");
                     console.log(amount);
                     console.log(typeof(amount));
-                    const unlockResponse = await jarContract.unlockFT(btAddresss, amount);
+                    const unlockResponse = (tokenInfo === "fungible") ? await jarContract.unlockFT(btAddresss, amount) : await jarContract.unlockNFT(btAddresss);
                     window.unlockResponse = unlockResponse;
                     setErrorMessage("Request to unlock " + amount + " tokens sent. Please check your wallet for status.")
                   // setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
@@ -945,7 +954,6 @@ export default function Lock({
           >
             Unlock
           </Button>
-        </div>
       </div>
     </div>
   );

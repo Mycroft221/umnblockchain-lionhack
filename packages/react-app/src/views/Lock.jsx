@@ -24,6 +24,7 @@ export default function Lock({
   const [approveResponse, setApproveResponse] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [tokenInfo, updateTokenInfo] = useState("fungible");
+  const [nftId, setNftId] = useState(0);
 
   return (
     <div>
@@ -54,7 +55,18 @@ export default function Lock({
           <div style={{ margin: 8 }}>
             <Input
               onChange={e => {
-                setAmount(e.target.value);
+                setAmount(e.target.value * 10 ** 18);
+              }}
+            />
+          </div>
+        </div>
+
+        <div hidden={tokenInfo !== "non_fungible"}>
+          <h4 style={{ marginTop: 16 }}>ID</h4>
+          <div style={{ margin: 8 }}>
+            <Input
+              onChange={e => {
+                setNftId(e.target.value);
               }}
             />
           </div>
@@ -448,8 +460,7 @@ export default function Lock({
                 // TODO: fix time
                 // const unlockTime = 100;
                 // alert(date);
-                
-                const lockResponse = await jarContract.lock(ltTokenAddress, amount, date);
+                const lockResponse = (tokenInfo === "non_fungible") ? await jarContract.lockNFT(ltTokenAddress, nftId, date) : await jarContract.lockFT(ltTokenAddress, amount, date);
                 window.lockResponse = lockResponse;
                 setErrorMessage(amount + " tokens successfully locked. Check your wallet for bond tokens issued.");
             }

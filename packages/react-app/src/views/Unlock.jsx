@@ -42,7 +42,7 @@ export default function Lock({
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
-              setAmount(e.target.value);
+              setAmount(e.target.value * 10 ** 18);
             }}
           />
             <Divider />
@@ -927,9 +927,10 @@ export default function Lock({
                     setErrorMessage("unlocking");
                     console.log(amount);
                     console.log(typeof(amount));
-                    const unlockResponse = await jarContract.unlock(btAddresss, amount);
+                    const unlockResponse = await jarContract.unlockFT(btAddresss, amount);
                     window.unlockResponse = unlockResponse;
-                  setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
+                    setErrorMessage("Request to unlock " + amount + " tokens sent. Please check your wallet for status.")
+                  // setErrorMessage(amount + " tokens successfully unlocked. Check your wallet for liquidity tokens returned.");
                  } catch (e) {
                      window.errorMessageMine = e;
                      if (e.data && e.data.message) {

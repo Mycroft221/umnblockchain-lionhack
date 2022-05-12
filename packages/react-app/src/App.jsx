@@ -257,9 +257,10 @@ function App(props) {
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
       <Menu style={{ textAlign: "center", marginTop: 40 }} selectedKeys={[location.pathname]} mode="horizontal">
-        {<Menu.Item key="/">
-          <Link to="/">Home</Link>
-        </Menu.Item>
+        {
+        //   <Menu.Item key="/">
+        //   <Link to="/">Home</Link>
+        // </Menu.Item>
         /*
         <Menu.Item key="/debug">
           <Link to="/debug">Debug Contracts</Link>
@@ -276,9 +277,9 @@ function App(props) {
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
         </Menu.Item> */}
-        <Menu.Item key="/exampleui">
+        {/* <Menu.Item key="/exampleui">
           <Link to="/exampleui">ExampleUI</Link>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="/lock">
           <Link to="/lock">Lock</Link>
         </Menu.Item>
